@@ -1,0 +1,35 @@
+<div class="container">
+    <h2>Welcome, {{ user.name }}</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Role:</strong> {{ user.role }}</p>
+  
+    <hr>
+  
+    <h3>Apply for Leave</h3>
+    <form (submit)="applyLeave()">
+      <div class="form-group">
+        <label>Reason:</label>
+        <input type="text" class="form-control" [(ngModel)]="leaveReason" name="leaveReason" required>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2">Submit Leave Request</button>
+    </form>
+  
+    <hr>
+  
+    <h3>Leave Requests</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Reason</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leave of leaveRequests">
+          <td>{{ leave.reason }}</td>
+          <td>{{ leave.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

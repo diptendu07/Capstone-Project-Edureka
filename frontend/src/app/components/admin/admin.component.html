@@ -1,0 +1,24 @@
+<h2>Leave Requests</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Reason</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let leave of leaveRequests">
+      <td>{{ leave.name }}</td>
+      <td>{{ leave.email }}</td>
+      <td>{{ leave.reason }}</td>
+      <td>{{ leave.status }}</td>
+      <td>
+        <button (click)="updateLeave(leave.studentId, leave.leaveId, 'approved')">Approve</button>
+        <button (click)="updateLeave(leave.studentId, leave.leaveId, 'rejected')">Reject</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
