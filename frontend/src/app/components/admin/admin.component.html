@@ -1,3 +1,35 @@
+<h2>Enroll Student</h2>
+<form (submit)="enrollStudent()">
+  <input type="text" placeholder="Name" [(ngModel)]="newStudent.name" name="name" required />
+  <input type="email" placeholder="Email" [(ngModel)]="newStudent.email" name="email" required />
+  <input type="password" placeholder="Password" [(ngModel)]="newStudent.password" name="password" required />
+  <button type="submit">Enroll</button>
+</form>
+
+<h2>Student List</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of students">
+      <td>{{ student.name }}</td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.isBlocked ? 'Blocked' : 'Active' }}</td>
+      <td>
+        <button (click)="toggleBlockStudent(student._id)">
+          {{ student.isBlocked ? 'Unblock' : 'Block' }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 <h2>Leave Requests</h2>
 <table>
   <thead>

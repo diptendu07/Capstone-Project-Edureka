@@ -1,18 +1,30 @@
 const User = require("../models/User");
+const bcrypt = require("bcryptjs");
 
 // 1️⃣ Enroll Student (Admin creates student account)
 exports.enrollStudent = async (req, res) => {
   try {
+    console.log("Incoming Request Body:", req.body);
+
     const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ msg: "All fields are required" });
+    }
 
     let student = await User.findOne({ email });
     if (student) return res.status(400).json({ msg: "Student already exists" });
 
-    student = new User({ name, email, password, role: "student" });
+    // ✅ Hash Password Before Saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    student = new User({ name, email, password: hashedPassword, role: "student" });
+
     await student.save();
 
     res.status(201).json({ msg: "Student enrolled successfully" });
   } catch (error) {
+    console.error("❌ Error enrolling student:", error);
     res.status(500).json({ msg: "Server Error", error });
   }
 };
@@ -30,18 +42,20 @@ exports.toggleBlockStudent = async (req, res) => {
 
     res.json({ msg: `Student ${student.isBlocked ? "blocked" : "unblocked"} successfully` });
   } catch (error) {
+    console.error("❌ Error blocking/unblocking student:", error);
     res.status(500).json({ msg: "Server Error", error });
   }
 };
 
-// Get All Leave Requests
+// 3️⃣ Get All Leave Requests
 exports.getLeaveRequests = async (req, res) => {
   try {
-    // Fetch only students who have leave requests
-    const studentsWithLeaves = await User.find({ role: "student", leaveRequests: { $exists: true, $not: { $size: 0 } } });
+    const studentsWithLeaves = await User.find({
+      role: "student",
+      leaveRequests: { $exists: true, $not: { $size: 0 } }
+    });
 
-    // Extract leave requests along with student details
-    const leaveRequests = studentsWithLeaves.map(student => 
+    const leaveRequests = studentsWithLeaves.map(student =>
       student.leaveRequests.map(leave => ({
         studentId: student._id,
         name: student.name,
@@ -51,16 +65,16 @@ exports.getLeaveRequests = async (req, res) => {
         status: leave.status,
         appliedAt: leave.appliedAt
       }))
-    ).flat(); // Flatten the array
+    ).flat(); 
 
     res.json(leaveRequests);
   } catch (error) {
-    console.error(error);
+    console.error("❌ Error fetching leave requests:", error);
     res.status(500).json({ msg: "Server error" });
   }
 };
 
-// 3️⃣ Approve/Reject Leave Requests
+// 4️⃣ Approve/Reject Leave Requests
 exports.manageLeaveRequest = async (req, res) => {
   try {
     const { studentId, leaveId, status } = req.body;
@@ -68,18 +82,15 @@ exports.manageLeaveRequest = async (req, res) => {
     const student = await User.findOne({ _id: studentId, role: "student" });
     if (!student) return res.status(404).json({ msg: "Student not found" });
 
-    // Find the leave request inside the student's leaveRequests array
     const leaveRequest = student.leaveRequests.id(leaveId);
     if (!leaveRequest) return res.status(404).json({ msg: "Leave request not found" });
 
-    // Update status
     leaveRequest.status = status;
     await student.save();
 
     res.json({ msg: "Leave status updated successfully" });
   } catch (error) {
-    console.error(error);
+    console.error("❌ Error updating leave request:", error);
     res.status(500).json({ msg: "Server error" });
   }
 };
-

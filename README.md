@@ -3,7 +3,10 @@
 ## Live Links
 - **GitHub Repository:** [Capstone Project Repo](https://github.com/diptendu07/Capstone-Project-Edureka)
 - **Backend (Render):** [Backend API](https://capstone-project-edureka-1.onrender.com)
-- **Frontend (Netlify):** [Student Portal](https://tranquil-horse-513b2a.netlify.app)
+- **Frontend (Netlify):** [Student Portal](https://67d3427dd48b8e6552a5aebb--edureka-student-portal.netlify.app/login)
+
+**Note: Once logged in, you might need to refresh the page for the logout button and navbar links to get vissible.**
+----------------------------------------------------------------------------------------------------------
 
 # Admin Credentials (For Testing Live Website)
 - **email:** **diptendulodh@gmail.com**
@@ -14,6 +17,7 @@
 - **password:** **password123**
 
 *Note: You can register new user and log in with that credentials as well.*
+------------------------------------------------------------------------------------------------------------
 
 ## Overview
 The Student Portal is a web-based application that manages student activities in a school or college environment. It enhances reliability and transparency in information exchange, such as exam notifications, gate pass details, and more. This application is built using the MEAN (MongoDB, Express.js, Angular, Node.js) stack following the MVC architecture.
