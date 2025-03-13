@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
         const decodedToken: any = jwtDecode(token); // ✅ Decode JWT
         console.log('Decoded Token:', decodedToken);
 
-        const response = await this.http.get<any>('http://localhost:5000/api/auth/profile', {
+        const response = await this.http.get<any>('https://capstone-project-edureka-1.onrender.com/api/auth/profile', {
           headers: { Authorization: `Bearer ${token}` }
         }).toPromise();
 
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
     try {
       if (typeof window !== 'undefined') {
         const token = localStorage.getItem('token');
-        const response = await this.http.get<any>('http://localhost:5000/api/student/view-leaves', {
+        const response = await this.http.get<any>('https://capstone-project-edureka-1.onrender.com/api/student/view-leaves', {
           headers: { Authorization: `Bearer ${token}` }
         }).toPromise();
         this.leaveRequests = response.leaveRequests;
@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
           return;
         }
 
-        await this.http.post('http://localhost:5000/api/student/apply-leave', 
+        await this.http.post('https://capstone-project-edureka-1.onrender.com/api/student/apply-leave', 
           { reason: this.leaveReason }, 
           { headers: { Authorization: `Bearer ${token}` } }
         ).toPromise();

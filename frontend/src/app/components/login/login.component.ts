@@ -18,7 +18,7 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   login() {
-    this.http.post('http://localhost:5000/api/auth/login', { email: this.email, password: this.password }).subscribe(
+    this.http.post('https://capstone-project-edureka-1.onrender.com/api/auth/login', { email: this.email, password: this.password }).subscribe(
       (response: any) => {
         if (response && response.token) {
           localStorage.setItem('user', JSON.stringify(response.user)); // ✅ Store user details

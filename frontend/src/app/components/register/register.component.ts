@@ -20,7 +20,7 @@ export class RegisterComponent {
 
   async register() {
     try {
-      await this.http.post<any>('http://localhost:5000/api/auth/register', {
+      await this.http.post<any>('https://capstone-project-edureka-1.onrender.com/api/auth/register', {
         name: this.name, 
         email: this.email, 
         password: this.password, 

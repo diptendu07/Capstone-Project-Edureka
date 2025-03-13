@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit {
 
   // ✅ Fetch Leave Requests
   getLeaveRequests() {
-    this.http.get('http://localhost:5000/api/admin/leave-requests').subscribe(
+    this.http.get('https://capstone-project-edureka-1.onrender.com/api/admin/leave-requests').subscribe(
       (data: any) => {
         this.leaveRequests = data;
       },
@@ -32,7 +32,7 @@ export class AdminComponent implements OnInit {
 
   // ✅ Approve or Reject Leave
   updateLeave(studentId: string, leaveId: string, status: string) {
-    this.http.put('http://localhost:5000/api/admin/manage-leave', { studentId, leaveId, status }).subscribe(
+    this.http.put('https://capstone-project-edureka-1.onrender.com/api/admin/manage-leave', { studentId, leaveId, status }).subscribe(
       (response) => {
         console.log('Leave status updated:', response);
         this.getLeaveRequests(); // Refresh the list after update
