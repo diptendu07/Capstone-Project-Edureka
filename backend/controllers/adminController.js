@@ -29,6 +29,17 @@ exports.enrollStudent = async (req, res) => {
   }
 };
 
+// 5️⃣ Get All Students
+exports.getAllStudents = async (req, res) => {
+  try {
+    const students = await User.find({ role: "student" }).select("-password");
+    res.json(students);
+  } catch (error) {
+    console.error("❌ Error fetching students:", error);
+    res.status(500).json({ msg: "Server Error", error });
+  }
+};
+
 // 2️⃣ Block/Unblock Student
 exports.toggleBlockStudent = async (req, res) => {
   try {
