@@ -18,23 +18,30 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   login() {
-    this.http.post('https://capstone-project-edureka-1.onrender.com/api/auth/login', { email: this.email, password: this.password }).subscribe(
-      (response: any) => {
-        if (response && response.token) {
-          localStorage.setItem('user', JSON.stringify(response.user)); // ✅ Store user details
-          localStorage.setItem('token', response.token); // ✅ Store JWT
+    this.http.post('https://capstone-project-edureka-1.onrender.com/api/auth/login', { email: this.email, password: this.password })
+      .subscribe(
+        (response: any) => {
+          if (response && response.token) {
+            localStorage.setItem('user', JSON.stringify(response.user)); // ✅ Store user details
+            localStorage.setItem('token', response.token); // ✅ Store JWT
 
-          if (response.user.role === 'admin') {
-            this.router.navigate(['/admin']); // Redirect to admin panel if admin
-          } else {
-            this.router.navigate(['/dashboard']); // Redirect students to dashboard
+            if (response.user.role === 'admin') {
+              this.router.navigate(['/admin']); // Redirect admin
+            } else {
+              this.router.navigate(['/dashboard']); // Redirect student
+            }
           }
+        },
+        (error) => {
+          if (error.status === 403) {
+            // 🔴 Show alert for blocked users
+            window.alert('❌ Sorry!! Admin has blocked your Profile');
+          } else {
+            // ❌ Show invalid credentials message
+            window.alert('❌ Invalid email or password. Please try again.');
+          }
+          console.error('Login failed', error);
         }
-      },
-      (error) => {
-        this.errorMessage = 'Invalid email or password';
-        console.error('Login failed', error);
-      }
-    );
+      );
   }
 }
