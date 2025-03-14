@@ -15,6 +15,8 @@ export class AdminComponent implements OnInit {
   leaveRequests: any[] = []; // Existing leave request feature
   newStudent = { name: '', email: '', password: '' };
 
+  apiUrl = 'https://capstone-project-edureka-1.onrender.com/api/admin'; // Update with actual backend URL
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -22,48 +24,53 @@ export class AdminComponent implements OnInit {
     this.fetchLeaveRequests();
   }
 
+  // Fetch all students
   fetchStudents() {
-    this.http.get<any[]>('https://capstone-project-edureka-1.onrender.com/api/admin/students').subscribe(
+    this.http.get<any[]>(`${this.apiUrl}/students`).subscribe(
       data => this.students = data,
-      error => console.error('Error fetching students', error)
+      error => console.error('❌ Error fetching students', error)
     );
   }
 
+  // Fetch leave requests
   fetchLeaveRequests() {
-    this.http.get<any[]>('https://capstone-project-edureka-1.onrender.com/api/admin/leave-requests').subscribe(
+    this.http.get<any[]>(`${this.apiUrl}/leave-requests`).subscribe(
       data => this.leaveRequests = data,
-      error => console.error('Error fetching leave requests', error)
+      error => console.error('❌ Error fetching leave requests', error)
     );
   }
 
+  // Enroll a new student
   enrollStudent() {
-    this.http.post('https://capstone-project-edureka-1.onrender.com/api/admin/enroll-student', this.newStudent).subscribe(
+    this.http.post(`${this.apiUrl}/enroll-student`, this.newStudent).subscribe(
       response => {
-        alert('Student enrolled successfully!');
+        alert('✅ Student enrolled successfully!');
         this.newStudent = { name: '', email: '', password: '' }; 
         this.fetchStudents(); 
       },
-      error => console.error('Error enrolling student', error)
+      error => console.error('❌ Error enrolling student', error)
     );
   }
 
+  // Block or Unblock Student
   toggleBlockStudent(studentId: string) {
-    this.http.put(`https://capstone-project-edureka-1.onrender.com/api/admin/block-student/${studentId}`, {}).subscribe(
+    this.http.put(`${this.apiUrl}/block-student/${studentId}`, {}).subscribe(
       response => {
-        alert('Student status updated!');
+        alert('✅ Student status updated!');
         this.fetchStudents();
       },
-      error => console.error('Error blocking student', error)
+      error => console.error('❌ Error blocking/unblocking student', error)
     );
   }
 
+  // Update Leave Requests
   updateLeave(studentId: string, leaveId: string, status: string) {
-    this.http.put('https://capstone-project-edureka-1.onrender.com/api/admin/manage-leave', { studentId, leaveId, status }).subscribe(
+    this.http.put(`${this.apiUrl}/manage-leave`, { studentId, leaveId, status }).subscribe(
       response => {
-        alert(`Leave ${status} successfully!`);
+        alert(`✅ Leave ${status} successfully!`);
         this.fetchLeaveRequests();
       },
-      error => console.error('Error updating leave request', error)
+      error => console.error('❌ Error updating leave request', error)
     );
   }
 }

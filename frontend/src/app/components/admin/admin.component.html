@@ -20,7 +20,7 @@
     <tr *ngFor="let student of students">
       <td>{{ student.name }}</td>
       <td>{{ student.email }}</td>
-      <td>{{ student.isBlocked ? 'Blocked' : 'Active' }}</td>
+      <td>{{ student.isBlocked ? '❌ Blocked' : '✅ Active' }}</td>
       <td>
         <button (click)="toggleBlockStudent(student._id)">
           {{ student.isBlocked ? 'Unblock' : 'Block' }}
@@ -48,8 +48,8 @@
       <td>{{ leave.reason }}</td>
       <td>{{ leave.status }}</td>
       <td>
-        <button (click)="updateLeave(leave.studentId, leave.leaveId, 'approved')">Approve</button>
-        <button (click)="updateLeave(leave.studentId, leave.leaveId, 'rejected')">Reject</button>
+        <button (click)="updateLeave(leave.studentId, leave.leaveId, 'approved')">✅ Approve</button>
+        <button (click)="updateLeave(leave.studentId, leave.leaveId, 'rejected')">❌ Reject</button>
       </td>
     </tr>
   </tbody>
