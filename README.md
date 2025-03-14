@@ -3,7 +3,7 @@
 ## Live Links
 - **GitHub Repository:** [Capstone Project Repo](https://github.com/diptendu07/Capstone-Project-Edureka)
 - **Backend (Render):** [Backend API](https://capstone-project-edureka-1.onrender.com)
-- **Frontend (Netlify):** [Student Portal](https://67d3427dd48b8e6552a5aebb--edureka-student-portal.netlify.app/login)
+- **Frontend (Netlify):** [Student Portal](https://edureka-student-portal.netlify.app/login)
 
 **Note: Once logged in, you might need to refresh the page for the logout button and navbar links to get vissible.**
 ----------------------------------------------------------------------------------------------------------
